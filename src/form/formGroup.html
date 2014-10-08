@@ -1,0 +1,27 @@
+<div class="form-group" ng-class="{
+    'has-success': tjFormGroup.showValid(),
+    'has-error': tjFormGroup.showInvalid()
+  }">
+
+  <label
+      ng-if="tjFormGroup.label !== null"
+      for="{{ ::tjFormGroup.ngModel.$name }}"
+      translate>
+    {{ ::tjFormGroup.label }}
+  </label>
+
+  <ng-transclude></ng-transclude>
+
+  <span
+      class="help-block"
+      ng-if="tjFormGroup.showInvalid()"
+      ng-messages="tjFormGroup.ngModel.$error">
+
+    <span ng-message="required">
+      <span translate translate-values="{ label: tjFormGroup.label }">
+        TJ.FORM.ERROR_REQUIRED
+      </span>
+    </span>
+
+  </span>
+</div>
