@@ -42,6 +42,10 @@ angular.module('tj.form')
         tjFormGroup.form = form;
         tjFormGroup.ngModel = ngModel;
 
+        // XXX HACK XXX: The transclude seems to copy classes onto the new root
+        // form-group div.  Reset it to just have a "form-group" class.
+        element.attr('class', 'form-group');
+
         var input = element.find('input');
 
         input.addClass('form-control');
