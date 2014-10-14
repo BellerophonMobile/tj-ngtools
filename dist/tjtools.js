@@ -1,10 +1,55 @@
-/*! tjtools.js 22566dd */'use strict';
+/*! tjtools.js 90ebba7 */'use strict';
 
 angular.module('tj.form', ['ngMessages', 'toastr', 'tj.translation']);
 
 'use strict';
 
 angular.module('tj.translation', ['pascalprecht.translate']);
+
+'use strict';
+
+angular.module('tj.alert', [])
+  .directive('alert', function () {
+    return {
+      restrict: 'E',
+      templateUrl: 'tj/alert/alert.html',
+      transclude: true,
+      scope: true,
+      link: function (scope, element, attrs) {
+
+        scope.isCloseable = false;
+
+        var generateClasses = function () {
+          scope.alertClasses = [];
+
+          if (angular.isDefined(attrs.alertClass)) {
+            scope.alertClasses.push(attrs.alertClass);
+          } else {
+            scope.alertClasses.push('alert-danger');
+          }
+
+          if (angular.isDefined(attrs.alertClose)) {
+            scope.isCloseable = true;
+            scope.alertClasses.push('alert-dismissible');
+          } else {
+            scope.isCloseable = false;
+          }
+        };
+
+        attrs.$observe('alertClass', function () {
+          generateClasses();
+        });
+
+        attrs.$observe('alertClose', function () {
+          generateClasses();
+        });
+
+        scope.alertClose = function () {
+          scope.$eval(attrs.alertClose);
+        };
+      }
+    };
+  });
 
 'use strict';
 
@@ -80,6 +125,10 @@ angular.module('tj.form')
 
         tjFormGroup.form = form;
         tjFormGroup.ngModel = ngModel;
+
+        // XXX HACK XXX: The transclude seems to copy classes onto the new root
+        // form-group div.  Reset it to just have a "form-group" class.
+        element.attr('class', 'form-group');
 
         var input = element.find('input');
 
@@ -287,6 +336,11 @@ angular.module('tj.translation')
 
 angular.module('tj.templates', []).run(['$templateCache', function($templateCache) {
   'use strict';
+
+  $templateCache.put('tj/alert/alert.html',
+    "<div class=\"alert\" ng-class=\"alertClasses\" role=\"alert\"> <button type=\"button\" class=\"close\" ng-if=\"isCloseable\" ng-click=\"alertClose()\"> <span aria-hidden=\"true\">&times;</span> <span class=\"sr-only\">Close</span> </button> <ng-transclude></ng-transclude> </div>"
+  );
+
 
   $templateCache.put('tj/form/formGroup.html',
     "<div class=\"form-group\" ng-class=\"{\n" +
