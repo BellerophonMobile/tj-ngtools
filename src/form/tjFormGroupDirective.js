@@ -14,7 +14,7 @@ angular.module('tj.form')
       controller: function () {
         this.form = null;
         this.ngModel = null;
-        this.label = null
+        this.label = null;
 
         this.isTouched = function () {
           return this.form.$submitted || this.ngModel.$touched;
