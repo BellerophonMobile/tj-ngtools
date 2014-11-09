@@ -1,4 +1,4 @@
-/*! tjtools.js 90ebba7 */'use strict';
+/*! tjtools.js 5f9141f */'use strict';
 
 angular.module('tj.form', ['ngMessages', 'toastr', 'tj.translation']);
 
@@ -98,7 +98,7 @@ angular.module('tj.form')
       controller: function () {
         this.form = null;
         this.ngModel = null;
-        this.label = null
+        this.label = null;
 
         this.isTouched = function () {
           return this.form.$submitted || this.ngModel.$touched;
