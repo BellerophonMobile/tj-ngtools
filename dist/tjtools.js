@@ -1,4 +1,4 @@
-/*! tjtools.js 5f9141f */'use strict';
+/*! tjtools.js 21867c1 */'use strict';
 
 angular.module('tj.form', ['ngMessages', 'toastr', 'tj.translation']);
 
@@ -293,7 +293,7 @@ angular.module('tj.spinner', [])
       link: function (scope, element, attrs) {
         var spinner = null;
 
-        attrs.$observe('spinner', function (value) {
+        var update = function (value) {
           if (spinner !== null) {
             spinner.stop();
           }
@@ -307,7 +307,9 @@ angular.module('tj.spinner', [])
           angular.extend(options, overrides);
 
           spinner = new Spinner(options).spin(element[0]);
-        });
+        };
+        attrs.$observe('spinner', update);
+        update();
 
         element.on('$destroy', function () {
           spinner.stop();
