@@ -47,7 +47,7 @@ angular.module('tj.spinner', [])
       link: function (scope, element, attrs) {
         var spinner = null;
 
-        attrs.$observe('spinner', function (value) {
+        var update = function (value) {
           if (spinner !== null) {
             spinner.stop();
           }
@@ -61,7 +61,9 @@ angular.module('tj.spinner', [])
           angular.extend(options, overrides);
 
           spinner = new Spinner(options).spin(element[0]);
-        });
+        };
+        attrs.$observe('spinner', update);
+        update();
 
         element.on('$destroy', function () {
           spinner.stop();
