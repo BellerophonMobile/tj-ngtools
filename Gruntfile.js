@@ -20,6 +20,11 @@ module.exports = function (grunt) {
 
     appConfig: appConfig,
 
+    watch: {
+      files: 'src/**/*',
+      tasks: 'build'
+    },
+
     // The actual grunt server settings
     connect: {
       options: {
