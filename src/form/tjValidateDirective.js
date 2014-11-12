@@ -65,8 +65,7 @@ angular.module('tj.form')
               validators;
 
           // If ng-model isn't defined, assume this is on a form element
-          if (!angular.isDefined(ngModel)) {
-
+          if (ngModel === null) {
             updateFunc = function (value) {
               // Attach validators to the form
               form.$tjValidator = value;
