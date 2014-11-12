@@ -1,4 +1,4 @@
-/*! tjtools.js 21867c1 */'use strict';
+/*! tjtools.js 393f119 */'use strict';
 
 angular.module('tj.form', ['ngMessages', 'toastr', 'tj.translation']);
 
@@ -54,6 +54,23 @@ angular.module('tj.alert', [])
 'use strict';
 
 angular.module('tj.form')
+  .directive('ngModel', function () {
+    return {
+      require: ['?^tjFormGroup', 'ngModel'],
+      link: function (scope, element, attrs, requires) {
+        var tjFormGroup = requires[0];
+        var ngModel = requires[1];
+
+        if (tjFormGroup !== null) {
+          tjFormGroup.ngModel = requires[1];
+        }
+      }
+    };
+  });
+
+'use strict';
+
+angular.module('tj.form')
   .directive('tjForm', ["$translate", "toastr", function ($translate, toastr) {
     return {
       restrict: 'A',
@@ -87,18 +104,17 @@ angular.module('tj.form')
 angular.module('tj.form')
   .directive('tjFormGroup', ["$translate", function ($translate) {
     return {
-      priority: 1000,
-      replace: true,
-      require: ['tjFormGroup', '^form', 'ngModel'],
-      restrict: 'A',
-      scope: {},
+      restrict: 'E',
+      require: ['tjFormGroup', '^form'],
+      scope: {
+        label: '@'
+      },
       templateUrl: 'tj/form/formGroup.html',
-      transclude: 'element',
+      transclude: true,
       controllerAs: 'tjFormGroup',
       controller: function () {
         this.form = null;
         this.ngModel = null;
-        this.label = null;
 
         this.isTouched = function () {
           return this.form.$submitted || this.ngModel.$touched;
@@ -121,29 +137,36 @@ angular.module('tj.form')
       link: function (scope, element, attrs, requires) {
         var tjFormGroup = requires[0];
         var form = requires[1];
-        var ngModel = requires[2];
 
         tjFormGroup.form = form;
-        tjFormGroup.ngModel = ngModel;
 
-        // XXX HACK XXX: The transclude seems to copy classes onto the new root
-        // form-group div.  Reset it to just have a "form-group" class.
-        element.attr('class', 'form-group');
-
-        var input = element.find('input');
-
-        input.addClass('form-control');
-
-        if (angular.isString(attrs.name)) {
-          input.attr('id', attrs.name);
-        }
-
-        if (angular.isString(attrs.label)) {
-          tjFormGroup.label = attrs.label;
+        if (angular.isDefined(scope.label)) {
+          tjFormGroup.label = scope.label;
         }
       }
     };
   }]);
+
+//      controllerAs: 'tjFormGroup',
+//      controller: function () {
+//        this.form = null;
+//        this.ngModel = null;
+//        this.label = null;
+//
+//      },
+//      link: function (scope, element, attrs, requires) {
+//
+//        var input = element.find('input');
+//
+//        input.addClass('form-control');
+//
+//        if (angular.isString(attrs.name)) {
+//          input.attr('id', attrs.name);
+//        }
+//
+//      }
+//    };
+//  });
 
 'use strict';
 
@@ -212,8 +235,7 @@ angular.module('tj.form')
               validators;
 
           // If ng-model isn't defined, assume this is on a form element
-          if (!angular.isDefined(ngModel)) {
-
+          if (ngModel === null) {
             updateFunc = function (value) {
               // Attach validators to the form
               form.$tjValidator = value;
