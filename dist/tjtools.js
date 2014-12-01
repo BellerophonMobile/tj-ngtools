@@ -1,4 +1,4 @@
-/*! tjtools.js 606b1c7 */'use strict';
+/*! tjtools.js f504faf */'use strict';
 
 angular.module('tj.form', ['ngMessages', 'toastr', 'tj.translation']);
 
@@ -311,7 +311,7 @@ angular.module('tj.spinner', [])
     };
 
     return {
-      restrict: 'E',
+      restrict: 'EA',
       link: function (scope, element, attrs) {
         var spinner = null;
 
