@@ -9,7 +9,7 @@ angular.module('tj.form')
         var ngModel = requires[1];
 
         if (tjFormGroup !== null) {
-          tjFormGroup.ngModel = requires[1];
+          tjFormGroup.ngModel = ngModel;
         }
       }
     };

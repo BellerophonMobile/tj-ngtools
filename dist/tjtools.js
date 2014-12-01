@@ -1,4 +1,4 @@
-/*! tjtools.js 393f119 */'use strict';
+/*! tjtools.js 606b1c7 */'use strict';
 
 angular.module('tj.form', ['ngMessages', 'toastr', 'tj.translation']);
 
@@ -62,7 +62,7 @@ angular.module('tj.form')
         var ngModel = requires[1];
 
         if (tjFormGroup !== null) {
-          tjFormGroup.ngModel = requires[1];
+          tjFormGroup.ngModel = ngModel;
         }
       }
     };
