@@ -43,7 +43,7 @@ angular.module('tj.spinner', [])
     };
 
     return {
-      restrict: 'E',
+      restrict: 'EA',
       link: function (scope, element, attrs) {
         var spinner = null;
 
