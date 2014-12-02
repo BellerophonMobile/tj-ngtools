@@ -1,4 +1,4 @@
-/*! tjtools.js f504faf */'use strict';
+/*! tjtools.js f5e6941 */'use strict';
 
 angular.module('tj.form', ['ngMessages', 'toastr', 'tj.translation']);
 
@@ -352,7 +352,8 @@ angular.module('tj.translation')
       TJ: {
         FORM: {
           ERROR_INVALID: 'Please fix the errors in the form.',
-          ERROR_REQUIRED: '{{ label | translate }} is required.'
+          ERROR_REQUIRED: '{{ label | translate }} is required.',
+          ERROR_EMAIL: '{{ label | translate }} is not a valid email address.'
         }
       }
     });
@@ -370,7 +371,7 @@ angular.module('tj.templates', []).run(['$templateCache', function($templateCach
     "<div class=\"form-group\" ng-class=\"{\n" +
     "    'has-success': tjFormGroup.showValid(),\n" +
     "    'has-error': tjFormGroup.showInvalid()\n" +
-    "  }\"> <label ng-if=\"tjFormGroup.label !== null\" for=\"{{ ::tjFormGroup.ngModel.$name }}\" translate> {{ ::tjFormGroup.label }} </label> <ng-transclude></ng-transclude> <span class=\"help-block\" ng-if=\"tjFormGroup.showInvalid()\" ng-messages=\"tjFormGroup.ngModel.$error\"> <span ng-message=\"required\"> <span translate translate-values=\"{ label: tjFormGroup.label }\"> TJ.FORM.ERROR_REQUIRED </span> </span> </span> </div>"
+    "  }\"> <label ng-if=\"tjFormGroup.label !== null\" for=\"{{ ::tjFormGroup.ngModel.$name }}\" translate> {{ ::tjFormGroup.label }} </label> <ng-transclude></ng-transclude> <span class=\"help-block\" ng-if=\"tjFormGroup.showInvalid()\" ng-messages=\"tjFormGroup.ngModel.$error\"> <span ng-message=\"required\"> <span translate translate-values=\"{ label: tjFormGroup.label }\"> TJ.FORM.ERROR_REQUIRED </span> </span> <span ng-message=\"email\"> <span translate translate-values=\"{ label: tjFormGroup.label }\"> TJ.FORM.ERROR_EMAIL </span> </span> </span> </div>"
   );
 
 }]);
