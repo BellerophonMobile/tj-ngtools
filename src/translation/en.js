@@ -9,7 +9,8 @@ angular.module('tj.translation')
       TJ: {
         FORM: {
           ERROR_INVALID: 'Please fix the errors in the form.',
-          ERROR_REQUIRED: '{{ label | translate }} is required.'
+          ERROR_REQUIRED: '{{ label | translate }} is required.',
+          ERROR_EMAIL: '{{ label | translate }} is not a valid email address.'
         }
       }
     });
