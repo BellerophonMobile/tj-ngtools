@@ -1,4 +1,4 @@
-/*! tjtools.js f5e6941 */'use strict';
+/*! tjtools.js 7305499 */'use strict';
 
 angular.module('tj.form', ['ngMessages', 'toastr', 'tj.translation']);
 
